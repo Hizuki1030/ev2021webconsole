@@ -1,0 +1,138 @@
+body {
+  background-color: #EDF2F7;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: 0#e2f1f1;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+.DataBox{
+  display: flex;
+
+}
+
+.left{
+  margin-top: 2%;
+  margin-bottom: 2%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  list-style: none;
+  width:28%;
+  display: inline-block;
+}
+
+.center{
+  margin-top: 2%;
+  margin-bottom: 2%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  list-style: none;
+  width:28%;
+  display: inline-block;
+}
+.right{
+  margin-top: 2%;
+  margin-bottom: 2%;
+  background-color: #ffd;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  list-style: none;
+  width:28%;
+  display: inline-block;
+}
+.connectBox{
+  background-color: #282c34;
+}
+.connectBox Button{
+  margin: 1%;
+  background-color:#1a90ff;
+  
+}
+
+.uuidSelect{
+  background-color: #ffffff;
+  margin:1%;
+  height:0.5%;
+  width:20%;
+}
+.connectButtonINPUT{
+  text-align: right;
+}
+
+.SecondGrade{
+  width:94%;
+  margin-bottom: 2%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  list-style: none;
+  display: flex;
+}
+.GoogleMap{
+
+  margin-left: 0;
+  margin-right: auto;
+  text-align: left;
+  list-style: none;
+  width:60%;
+  display: inline-block;
+}
+
+.meter{
+  margin-right: 0;
+  text-align: left;
+  list-style: none;
+  width:40%;
+  display: inline-block;
+}
+
+.topicViewer{
+  height: 55%;
+  margin-bottom: 7%;
+}
+
+.statusBox{
+  display: flex;
+  height: 30%;
+  margin-bottom: 7%;
+}
+
+.statusViewer{
+  width: 30%;
+  margin:2%;
+}
