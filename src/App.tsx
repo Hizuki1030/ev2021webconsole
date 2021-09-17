@@ -15,6 +15,7 @@ function App() {
   const [receivedTopics, setReceivedTopics] = useState<Array<string>>([]);
   var [Speed, setSelectedTopicSpeed] =useState<string>('0');
   var [Lat, setSelectedTopicLat] =useState<string>('0');
+  var [Long, setSelectedTopicLong] =useState<string>('0');
   useEffect(() => {
     const a = {baseURL:"https://ros-rowma.herokuapp.com"};
     const _rowma = new Rowma(a);
@@ -54,6 +55,10 @@ function App() {
     rowma.setTopicRoute(selectedRobotUuid, 'application', rowma.uuid, selectedTopicName);
     rowma.subscribe(selectedTopicName, handleTopicLat)
 
+    selectedTopicName = "/Rowma_GPS_long"
+    rowma.setTopicRoute(selectedRobotUuid, 'application', rowma.uuid, selectedTopicName);
+    rowma.subscribe(selectedTopicName, handleTopicLong)
+
     selectedTopicName = "/Rowma_GPS_speed"
     rowma.setTopicRoute(selectedRobotUuid, 'application', rowma.uuid, selectedTopicName);
     rowma.subscribe(selectedTopicName, handleTopicSpeed)
@@ -70,11 +75,16 @@ function App() {
   }
 
   const handleTopicLat = (event: Topic) => {
-    console.log(event.msg)  
     Lat = event.msg["data"]
     setSelectedTopicLat(Lat)
     console.log(Lat)
   }
+
+  const handleTopicLong = (event: Topic) => {
+    Long = event.msg["data"]
+    setSelectedTopicLong(Long)
+  }
+
 
 
   return (
@@ -102,12 +112,12 @@ function App() {
       </div>
       <div className="DataBox">
         <div className = "left"><Chart name={"Power voltage"}  MaterColor={"#1a90ff"} value={"0"} unit={"V"} min_value={"0"} max_value={"30"}/></div>
-        <div className = "center"><Chart name={"System voltage"} MaterColor={"#0000ff"} value={Lat} unit={"V"} min_value={"0"} max_value={"10"}/></div>
+        <div className = "center"><Chart name={"System voltage"} MaterColor={"#0000ff"} value={"0"} unit={"V"} min_value={"0"} max_value={"10"}/></div>
         <div className = "right"><Chart name={"Speed"} MaterColor={"#0000ff"} value={Speed} unit={"km/h"} min_value={"0"} max_value={"60"}/></div>
       </div>
       <div className="SecondGrade">
         <div className="GoogleMap">
-          <GoogleMap/>
+          <GoogleMap lat={Lat} long={Long}/>
         </div>
         <div className="meter">
         <Card className="topicViewer">
