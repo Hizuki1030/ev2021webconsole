@@ -13,9 +13,9 @@ function App() {
   const [robot, setRobot] = useState<any>(null);
   const [selectedTopicName, setSelectedTopicName] = useState<string>('');
   const [receivedTopics, setReceivedTopics] = useState<Array<string>>([]);
-  var [Speed, setSelectedTopicSpeed] =useState<string>('0');
-  var [Lat, setSelectedTopicLat] =useState<string>('0');
-  var [Long, setSelectedTopicLong] =useState<string>('0');
+  var [Speed, setSelectedTopicSpeed] =useState<any>(0);
+  var [Lat, setSelectedTopicLat] =useState<any>('0');
+  var [Long, setSelectedTopicLong] =useState<any>('0');
   useEffect(() => {
     const a = {baseURL:"https://ros-rowma.herokuapp.com"};
     const _rowma = new Rowma(a);
@@ -43,25 +43,28 @@ function App() {
   }
 
   const handlePublishTopic = () => {
-    console.log("hellod")
     const currentTime = new Date()
     const msg = { "data": `[${currentTime.toUTCString()}] Topic from browser!` }
     const selectedTopicName = "/chatter"
     rowma.publish(selectedRobotUuid, selectedTopicName, msg)
   }
 
-  const handleSubscribeButtonClick = () => {
-    let selectedTopicName = "/Rowma_GPS_lat"
-    rowma.setTopicRoute(selectedRobotUuid, 'application', rowma.uuid, selectedTopicName);
+  const handleSubscribeButtonClick = async () => {
+    let selectedTopicName = "/GPS_speed"
+    await rowma.subscribe(selectedTopicName, handleTopicSpeed)
+    await rowma.setTopicRoute(selectedRobotUuid, 'application', rowma.uuid, selectedTopicName);
+    
+
+
+    selectedTopicName = "/GPS_lat"
     rowma.subscribe(selectedTopicName, handleTopicLat)
-
-    selectedTopicName = "/Rowma_GPS_long"
     rowma.setTopicRoute(selectedRobotUuid, 'application', rowma.uuid, selectedTopicName);
+    
+
+    selectedTopicName = "/GPS_long"
     rowma.subscribe(selectedTopicName, handleTopicLong)
-
-    selectedTopicName = "/Rowma_GPS_speed"
     rowma.setTopicRoute(selectedRobotUuid, 'application', rowma.uuid, selectedTopicName);
-    rowma.subscribe(selectedTopicName, handleTopicSpeed)
+    
 
 
     
