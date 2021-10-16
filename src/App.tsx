@@ -6,6 +6,8 @@ import Chart from './cart';
 import GoogleMap from "./map"
 import {Card, Button,Select ,MenuItem} from '@material-ui/core';
 
+
+
 function App() {
   const [rowma, setRowma] = useState<any>(null);
   const [robotUuids, setRobotUuids] = useState<Array<string>>([]);
@@ -16,6 +18,7 @@ function App() {
   var [Speed, setSelectedTopicSpeed] =useState<any>(0);
   var [Lat, setSelectedTopicLat] =useState<any>('0');
   var [Long, setSelectedTopicLong] =useState<any>('0');
+  var [BatteryVoltage, setSelectedTopicBatteryVoltage] =useState<any>(0);
   useEffect(() => {
     const a = {baseURL:"https://ros-rowma.herokuapp.com"};
     const _rowma = new Rowma(a);
@@ -66,6 +69,9 @@ function App() {
     rowma.setTopicRoute(selectedRobotUuid, 'application', rowma.uuid, selectedTopicName);
     
 
+    selectedTopicName = "/BatteryVoltage"
+    rowma.subscribe(selectedTopicName, handleTopicBatteryVoltage)
+    rowma.setTopicRoute(selectedRobotUuid, 'application', rowma.uuid, selectedTopicName);
 
     
     console.log("called")
@@ -86,6 +92,13 @@ function App() {
   const handleTopicLong = (event: Topic) => {
     Long = event.msg["data"]
     setSelectedTopicLong(Long)
+  }
+
+  const handleTopicBatteryVoltage = (event: Topic) => {
+    BatteryVoltage = event.msg["data"]
+    console.log(BatteryVoltage)
+    BatteryVoltage = Math.round(BatteryVoltage * 10) / 10;
+    setSelectedTopicBatteryVoltage(BatteryVoltage)
   }
 
 
@@ -114,7 +127,7 @@ function App() {
         </div>
       </div>
       <div className="DataBox">
-        <div className = "left"><Chart name={"Power voltage"}  MaterColor={"#1a90ff"} value={"0"} unit={"V"} min_value={"0"} max_value={"30"}/></div>
+        <div className = "left"><Chart name={"Power voltage"}  MaterColor={"#1a90ff"} value={BatteryVoltage} unit={"V"} min_value={"0"} max_value={"30"}/></div>
         <div className = "center"><Chart name={"System voltage"} MaterColor={"#0000ff"} value={"0"} unit={"V"} min_value={"0"} max_value={"10"}/></div>
         <div className = "right"><Chart name={"Speed"} MaterColor={"#0000ff"} value={Speed} unit={"km/h"} min_value={"0"} max_value={"60"}/></div>
       </div>
